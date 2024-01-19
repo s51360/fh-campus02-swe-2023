@@ -12,6 +12,49 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public double perform(Operation op) throws CalculatorException {
+        double a, b, c;
+
+        switch (op) {
+            case add:
+                b = pop();
+                a = pop();
+                return a + b;
+            case sub:
+                b = pop();
+                a = pop();
+                return a - b;
+            case div:
+                b = pop();
+                a = pop();
+                c = a / b;
+                if (Double.isInfinite(c))
+                    throw new CalculatorException("Division by zero");
+                return c;
+            case mul:
+                b = pop();
+                a = pop();
+                return a * b;
+            case mod:
+                b = pop();
+                a = pop();
+                return a % b;
+            case sin:
+                a = pop();
+                b = a * Math.PI/180;
+                return Math.sin(b); // Stellen Sie sicher, dass a in Radiant ist
+            case cos:
+                a = pop();
+                b = a * Math.PI/180;
+                return Math.cos(b); // Stellen Sie sicher, dass a in Radiant ist
+        }
+        return 0;
+    }
+
+
+    /*
+
+        @Override
+    public double perform(Operation op) throws CalculatorException {
 
         double b = pop();
         double a = pop();
@@ -30,9 +73,53 @@ public class CalculatorImpl implements Calculator {
                 return a * b;
             case mod:
                 return a % b;
+            case sin:
+                return Math.sin(a);
+            case cos:
+                return Math.cos(a);
         }
         return 0;
     }
+
+     */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public double pop() throws CalculatorException {
