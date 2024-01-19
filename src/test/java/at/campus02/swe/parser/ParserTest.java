@@ -27,16 +27,16 @@ public class ParserTest {
     }
 
     @Test
-    public void testParserTest01Xml() throws Exception {
+    public void testParserTest04Xml() throws Exception {
 
         Calculator cal = mock(Calculator.class);
 
         Parser parser = new Parser(cal);
-        parser.parse(new File("src/test/resources/test01.xml"));
+        parser.parse(new File("src/test/resources/test04.xml"));
 
-        verify(cal).push(1.0);
-        verify(cal).push(2.0);
-        verify(cal).perform(Operation.add);
+        verify(cal).push(3.0);
+        verify(cal).push(9.0);
+        verify(cal).perform(Operation.mod);
 
         verifyNoMoreInteractions(cal);
     }
