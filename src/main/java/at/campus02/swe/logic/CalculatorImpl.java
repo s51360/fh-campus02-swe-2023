@@ -4,11 +4,17 @@ package at.campus02.swe.logic;
 import at.campus02.swe.Calculator;
 import at.campus02.swe.CalculatorException;
 
+import java.util.Random;
 import java.util.Stack;
 
 public class CalculatorImpl implements Calculator {
 
+
     private Stack<Double> stack_ = new Stack<Double>();
+
+
+
+
 
     @Override
     public double perform(Operation op) throws CalculatorException {
@@ -41,13 +47,43 @@ public class CalculatorImpl implements Calculator {
             case sin:
                 a = pop();
                 b = a * Math.PI/180;
-                return Math.sin(b); // Stellen Sie sicher, dass a in Radiant ist
+                return Math.sin(b);
             case cos:
                 a = pop();
                 b = a * Math.PI/180;
-                return Math.cos(b); // Stellen Sie sicher, dass a in Radiant ist
+                return Math.cos(b);
+            case random:
+                double max = pop();
+                double min = pop();
+
+                if (min > max) {
+                    throw new CalculatorException("Minimum ist größer als Maximum");
+                }
+
+                int minInt = (int) Math.ceil(min);
+                int maxInt = (int) Math.floor(max);
+
+                Random rand = new Random();
+                return rand.nextInt(maxInt - minInt + 1) + minInt;
+            case dotproduct:
+                if (stack_.size() < 3) {
+                    throw new CalculatorException("Nicht genügend Elemente für Skalarprodukt");
+                }
+
+                int n = (int) Math.round(pop());
+                double dotProduct = 0;
+
+                for (int i = 0; i < n; i++) {
+                     a = pop();
+                     b = pop();
+                    dotProduct += a * b;
+                }
+
+                return dotProduct;
         }
         return 0;
+
+
     }
 
 
