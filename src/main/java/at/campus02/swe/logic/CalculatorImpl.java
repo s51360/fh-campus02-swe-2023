@@ -4,6 +4,7 @@ package at.campus02.swe.logic;
 import at.campus02.swe.Calculator;
 import at.campus02.swe.CalculatorException;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Stack;
 
@@ -12,9 +13,7 @@ public class CalculatorImpl implements Calculator {
 
     private Stack<Double> stack_ = new Stack<Double>();
 
-
-
-
+    private HashMap<String, Double> storedValues = new HashMap<>();
 
     @Override
     public double perform(Operation op) throws CalculatorException {
@@ -82,80 +81,7 @@ public class CalculatorImpl implements Calculator {
                 return dotProduct;
         }
         return 0;
-
-
     }
-
-
-    /*
-
-        @Override
-    public double perform(Operation op) throws CalculatorException {
-
-        double b = pop();
-        double a = pop();
-
-        switch (op) {
-            case add:
-                return a + b;
-            case sub:
-                return a - b;
-            case div:
-                double c = a / b;
-                if (Double.isInfinite(c))
-                    throw new CalculatorException("Division by zero");
-                return c;
-            case mul:
-                return a * b;
-            case mod:
-                return a % b;
-            case sin:
-                return Math.sin(a);
-            case cos:
-                return Math.cos(a);
-        }
-        return 0;
-    }
-
-     */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
     public double pop() throws CalculatorException {
@@ -174,4 +100,22 @@ public class CalculatorImpl implements Calculator {
         stack_.clear();
     }
 
+    @Override
+    public void store(String name) {
+
+        double value = stack_.peek();
+        storedValues.put(name, value);
+
+    }
+
+    @Override
+    public void load(String name) throws CalculatorException {
+
+        if (storedValues.containsKey(name) == false) {
+            throw new CalculatorException("Name nicht im Speicher gefunden");
+        }
+
+        double value = storedValues.get(name);
+        stack_.push(value);
+    }
 }

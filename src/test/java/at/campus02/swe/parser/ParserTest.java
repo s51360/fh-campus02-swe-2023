@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 
 import at.campus02.swe.logic.CalculatorImpl;
 import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import at.campus02.swe.Calculator;
@@ -87,5 +89,27 @@ public class ParserTest {
         inOrder.verify(cal).perform(Operation.dotproduct);
 
         verifyNoMoreInteractions(cal);
+    }
+
+    @Test
+    public void testStoreMethod_withDefaultStore() throws Exception {
+
+        Calculator cal = new CalculatorImpl();
+        Parser parser = new Parser(cal);
+
+        double result = parser.parse(new File("src/test/resources/test10.xml"));
+
+        assertEquals(26.33, result, 0.1);
+    }
+
+    @Test
+    public void testStoreMethod_withSpecificStore() throws Exception {
+
+        Calculator cal = new CalculatorImpl();
+        Parser parser = new Parser(cal);
+
+        double result = parser.parse(new File("src/test/resources/test11.xml"));
+
+        assertEquals(45, result, 0);
     }
 }

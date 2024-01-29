@@ -39,12 +39,14 @@ public class Parser {
                 } else {
                     calc_.push(Double.parseDouble(value));
                 }
-            } else if ("pop"
-                    .equals(e.asStartElement().getName().getLocalPart())) {
+            } else if ("pop".equals(e.asStartElement().getName().getLocalPart())) {
                 calc_.pop();
-            } else if ("operation".equals(e.asStartElement().getName()
-                    .getLocalPart())) {
+            } else if ("operation".equals(e.asStartElement().getName().getLocalPart())) {
                 result = calc_.perform(readOperation(value));
+            } else if ("store".equals(e.asStartElement().getName().getLocalPart())) {
+                calc_.store(value);
+            } else if ("load".equals(e.asStartElement().getName().getLocalPart())) {
+                calc_.load(value);
             }
         }
 
@@ -89,6 +91,27 @@ public class Parser {
         else if ("dotproduct".equals(value))
             return Operation.dotproduct;
 
-        throw new CalculatorException("Unsuppoted Operation!");
+        throw new CalculatorException("Unsupported Operation!");
     }
+
+    /*
+
+    private void processStore(String value) throws CalculatorException {
+
+        if (value.isEmpty()) {
+            calc_.store("default");
+        } else {
+            calc_.store(value);
+        }
+    }
+
+    private void processLoad(String value) throws CalculatorException {
+        if (value.isEmpty()) {
+            calc_.load("default");
+        } else {
+            calc_.load(value);
+        }
+    }
+
+    */
 }
